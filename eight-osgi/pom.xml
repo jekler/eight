@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+  	<relativePath>../eight/pom.xml</relativePath>
+    <groupId>net.yeeyaa.eight</groupId> 
+    <artifactId>eight</artifactId>
+    <version>1.0.0</version>
+  </parent>
+  <artifactId>eight-osgi</artifactId>
+  <packaging>bundle</packaging>
+
+  <name>eight-osgi</name>
+  <url>http://maven.apache.org</url>
+
+	<properties>
+		<obfuscator.skip>false</obfuscator.skip>
+		<obfuscator.conf>${project.basedir}${file.separator}..${file.separator}eight${file.separator}tools${file.separator}obfuscator.xml</obfuscator.conf>
+	</properties>
+
+  <dependencies>          
+    <dependency>
+    	<groupId>net.yeeyaa.eight</groupId>
+    	<artifactId>eight-core</artifactId>
+    	<version>${project.version}</version> 
+    </dependency> 
+	<dependency>
+		<groupId>org.osgi</groupId>
+		<artifactId>org.osgi.core</artifactId>   			
+		<version>4.3.0</version>
+	</dependency> 
+	<dependency>
+		<groupId>org.osgi</groupId>
+		<artifactId>org.osgi.compendium</artifactId>
+    	<scope>provided</scope>  
+    	<optional>true</optional>   			
+		<version>4.3.0</version>
+	</dependency>	   	  		
+    <dependency>
+    	<groupId> org.springframework</groupId>
+    	<artifactId>spring-context</artifactId>
+    	<scope>provided</scope>     	    	
+    	<version>4.2.5.RELEASE</version>
+    </dependency>     
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>servlet-api</artifactId>
+    	<scope>provided</scope>  
+    	<optional>true</optional> 		
+		<version>2.5</version>
+	</dependency>         
+  </dependencies> 
+  
+  <build>
+   <plugins>  
+       <plugin>
+         <groupId>org.apache.felix</groupId>
+         <artifactId>maven-ipojo-plugin</artifactId>
+         <version>1.12.1</version>
+         <executions>
+             <execution>
+                 <goals>
+                     <goal>ipojo-bundle</goal>
+                 </goals>
+				 <configuration>
+                     <metadata>src/main/resources/META-INF/metadata.xml</metadata>
+               	 </configuration>                  
+             </execution>
+         </executions>
+     </plugin>                     
+   </plugins>
+ </build>  
+</project>
