@@ -1,0 +1,32 @@
+/* start custom scss snippet */
+.btn {
+    display: inline-block;
+    background: -webkit-linear-gradient(top, rgba(40,40,40,0.3), rgba(35,35,35,0.3) 50%, rgba(10,10,10,0.3) 50%, rgba(0,0,0,0.3));
+    padding: 8px 18px;
+    border-radius: 50px;
+    border: 2px solid rgba(0,0,0,0.7);
+    border-bottom: 2px solid rgba(0,0,0,0.7);
+    border-top: 2px solid #000;
+    color: rgba(255,255,255,0.8);
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    margin: 50px;
+    white-space: nowrap;
+    text-overflow:ellipsis; 
+	overflow:hidden;
+    text-decoration: none;
+}
+.github-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 1px 8px 0 0;
+    float: left;
+    white-space: nowrap;
+    text-overflow:ellipsis; 
+	overflow:hidden;
+    background: url(/eight/assets/images/github.svg) 0 0 no-repeat;
+}
+/* end custom scss snippet */
