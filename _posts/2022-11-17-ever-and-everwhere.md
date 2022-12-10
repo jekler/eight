@@ -139,7 +139,7 @@ eight与其它框架不同之处在于它多出一种时态——装配时。联
 ![装配时](/eight/assets/images/equiptime.gif){:.rounded width="720px" style="display:block; margin-left:auto; margin-right:auto"}
 
 这些我们前面都已经了解了，用spring做配置是不用介绍了。接下来主要介绍运行时的动态联结，那些package、bundle、component、config、instance和link们的关系。
-- 首先是基础容器了，基础容器就是felix框架了，内置的三大基础libs分别是1）java runtime libs；2)共识接口；3)eight基础库。当然eight本身还依赖着一些常用的工具libs，但这一般对上层运行的bundle不可见。同时使用者也可能自行开发一些元件库。这些构成了eight的最底层，第三方libs往往会有各种交叉依赖，所以这层变动是很困难的，升级往往意味着重启。
+- 首先是基础底座了，基础底座就是felix框架了，内置的三大基础libs分别是1）java runtime libs；2)共识接口；3)eight基础库。当然eight本身还依赖着一些常用的工具libs，但这一般对上层运行的bundle不可见。同时使用者也可能自行开发一些元件库。这些构成了eight的最底层，第三方libs往往会有各种交叉依赖，所以这层变动是很困难的，升级往往意味着重启。
 - 其上是bundle层了。eight中的bundle间已经不存在交叉依赖了，全是垂直依赖关系，保证任何一个bundle在物理上不依赖于与其平级的bundle，这样依赖之网也就被解除了。所以当bundle里的代码或配置修改后，需要重载时，其余的bundle不受影响。当然它们都依赖着底层libs，尤其是共识接口。一旦底层变动...呃，那本来就是要重启系统了，所以保持底层相对稳定很重要。但如果底层没有它们需要的libs呢？前面介绍过，可以在bundle里自带干粮。
 - 然后是component，到这里已经离开物理层进入逻辑层了。component就对应eight里的组件，关于component与instance的关系和故事大家可以参阅前面的iPojo介绍。值得注意的是，bundle里可以定义零到多个component，但一般建议只定义一个，否则多个component必然在生命周期上存在耦合性，这在大多数情况下都是应该避免的。
 - 通过前面介绍我们知道，component里面往往是一套springContext，大量的bean相关关联构成一个相对稳定而有意义的整体，当然就如前面所说那样，也可以完全不用元件和spring。因为bundle本身是无依赖的，component彼此也无依赖。
