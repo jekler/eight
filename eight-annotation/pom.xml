@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+  	<relativePath>../eight/pom.xml</relativePath>
+    <groupId>net.yeeyaa.eight</groupId>
+    <artifactId>eight</artifactId>
+    <version>1.0.0</version>
+  </parent>
+  <artifactId>eight-annotation</artifactId>
+  <packaging>bundle</packaging>
+
+  <name>eight-annotation</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+	<obfuscator.skip>true</obfuscator.skip>
+  </properties>
+
+  <dependencies>
+     <dependency>
+    	<groupId>net.yeeyaa.eight</groupId>
+    	<artifactId>eight-core</artifactId>
+    	<version>${project.version}</version>
+    </dependency>  
+     <dependency>
+    	<groupId>net.yeeyaa.eight</groupId>
+    	<artifactId>eight-common-spring</artifactId>
+    	<version>${project.version}</version>
+    </dependency> 
+    <dependency>
+    	<groupId>net.yeeyaa.eight</groupId>
+    	<artifactId>eight-annotation-tag</artifactId>
+    	<version>${project.version}</version>
+    </dependency>      
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-context</artifactId>
+    	<version>4.2.9.RELEASE</version>
+     	<scope>provided</scope>     	
+	    <optional>true</optional>      	
+    </dependency>    
+    <dependency>
+    	<groupId>org.reflections</groupId>
+    	<artifactId>reflections</artifactId>
+    	<scope>provided</scope>
+ 	    <optional>true</optional>    	
+    	<version>[0.9.9,)</version>
+    </dependency>      
+  </dependencies>
+</project>

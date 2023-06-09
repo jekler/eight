@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipojo xmlns:jmx="org.apache.felix.ipojo.handlers.jmx">
+	<component classname="net.yeeyaa.eight.osgi.runtime.BundleCenter" name="center">
+		<controller field="state"/>
+		<callback transition="validate" method="validate" />
+		<callback transition="invalidate" method="invalidate" />
+		<requires id="executor" optional="true" nullable="false">
+		     <callback type="bind" method="bindExecutor"/>
+		     <callback type="unbind" method="unbindExecutor"/>
+		</requires>	
+		<requires id="linker" aggregate="true" optional="true">
+		     <callback type="bind" method="bindLinker"/>
+		     <callback type="unbind" method="unbindLinker"/>
+		</requires>		
+		<properties updated="updated" propagation="false">
+			<property name="wait" method="setWait"/>
+			<property name="config" method="setConfig"/>
+			<property name="permit" method="setPermit"/>
+			<property name="trace" method="setTrace"/>
+			<property name="clone" method="setClone"/>				
+			<property name="mode" method="setMode"/>
+			<property name="thread" method="setThread"/>	
+			<property name="resource" method="setResource"/>	
+			<property name="reload" method="setReload"/>								
+			<property name="holder" method="setHolder"/>
+			<property name="log" method="setLog"/>		
+			<property name="logger" method="setLogger"/>	
+			<property name="context" method="setContext"/>					
+			<property name="readonly" method="setReadonly"/>
+			<property name="hookid" method="setHookid"/>
+			<property name="updater" method="setUpdater"/>	
+			<property name="proxy" method="setProxy"/>								
+			<property name="executorBinder" method="setExecutorBinder"/>
+			<property name="executorUnbinder" method="setExecutorUnbinder"/>		
+			<property name="binder" method="setBinder"/>	
+			<property name="unbinder" method="setUnbinder"/>
+			<property name="validater" method="setValidater"/>
+			<property name="invalidater" method="setInvalidater"/>						
+			<property name="register" method="setRegister"/>
+			<property name="unregister" method="setUnregister"/>
+			<property name="hookid" method="setHookid"/>	
+			<property name="begin" method="setBegin"/>
+			<property name="close" method="setClose"/>	
+			<property name="path" method="setPath"/>
+			<property name="pattern" method="setPattern"/>
+			<property name="recurse" method="setRecurse"/>			
+			<property name="key" method="setKey" value="service.description"/>																
+		</properties>
+		<provides specifications="net.yeeyaa.eight.osgi.IBundleService" post-unregistration="unregistered" post-registration="registered"/>
+		<!-- <jmx:config>
+		    <jmx:method name="setConfig"/>
+		    <jmx:method name="setPermit"/>
+		    <jmx:method name="setLogger"/>
+		    <jmx:method name="setTrace"/>
+		    <jmx:method name="setClone"/>		    
+		    <jmx:method name="control"/>	
+		    <jmx:method name="state"/>		    		    
+		    <jmx:method name="debug"/>	
+		    <jmx:method name="trace"/>		
+		    <jmx:method name="info"/>			    	    	    		    
+    	</jmx:config> -->
+	</component>
+	<component classname="net.yeeyaa.eight.osgi.runtime.BundleLinker" name="linker">
+		<requires optional="true" policy="dynamic-priority" id="service">
+			<callback type="bind" method="bindService"/>
+    		<callback type="unbind" method="unbindService"/>
+		</requires>		
+		<properties updated="updated" propagation="false">
+			<property name="wait" method="setWait"/>				
+			<property name="mode" method="setMode"/>
+			<property name="name" method="setName" mandatory="true"/>	
+			<property name="bean" method="setBean"/>								
+			<property name="rank" method="setRank"/>	
+			<property name="proxy" method="setProxy"/>				
+			<property name="updater" method="setUpdater"/>								
+			<property name="binder" method="setBinder"/>	
+			<property name="unbinder" method="setUnbinder"/>																			
+		</properties>
+		<provides specifications="net.yeeyaa.eight.osgi.IBundleLinker"/>		
+	</component>	
+<!--	<instance name="template" component="center">
+		 <property name="requires.filters">
+         	<property name="proxy" value="(service.description=this.center.category.proxy.*)"/>
+     	 </property> 
+		 <property name="mode" value="0"/> 
+		 <property name="resource" value="sys:spring.load.location"/>     	 	
+		 <property name="context" value="context"/> 
+		 <property name="close" value="close"/>	
+		 <property name="begin" value="begin"/>			 
+		 <property name="holder" value="beanHolder"/> 		 
+		 <property name="log" value="log"/> 	 	
+		 <property name="reload" value="false"/> 	
+		 <property name="readonly" value="true"/> 
+		 <property name="wait" value="5"/> 	
+		 <property name="thread" value="false"/> 	 		 	 
+		 <property name="hookid" value="this.center.category.hook"/>  
+		 <property name="key" value="service.description"/>	
+		 <property name="logger" value="log.test|this.one"/> 		 
+		 <property name="config" value="key1#value1##key2#value2"/>
+		 <property name="permit" value="name1||type1|type2|||name2||type1|type2"/>	
+		 <property name="path" value="OSGI-INF/blueprint"/>
+		 <property name="pattern" value="*Context.xml"/>
+		 <property name="recurse" value="false"/>		 	 
+	     <property name="service.ranking" value="888"/>  								     
+	     <property name="service.description" value="this.center.category.instance1"/>
+	</instance>	
+	<instance name="template.proxy.instance1" component="linker">
+		 <property name="requires.filters">
+         	<property name="service" value="(service.description=next.center.category.*)"/>
+     	 </property>    	 	 
+		 <property name="name" value="inner.bean.name"/> 	
+		 <property name="bean" value="next.invoke.bean"/>
+		 <property name="rank" value="88"/> 	
+		 <property name="mode" value="0"/> 	
+		 <property name="wait" value="5"/> 			 	   
+	     <property name="service.description" value="this.center.category.linker.instance1"/>		 
+	</instance> -->		
+</ipojo>

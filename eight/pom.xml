@@ -1,0 +1,196 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.yeeyaa.eight</groupId>
+	<artifactId>eight</artifactId>
+	<version>${project.version}</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.version>1.0.0</project.version>
+		<obfuscator.skip>true</obfuscator.skip>
+		<obfuscator.jar>${project.basedir}${file.separator}..${file.separator}eight${file.separator}tools${file.separator}obfuscator.jar</obfuscator.jar>
+		<obfuscator.conf>${project.basedir}${file.separator}..${file.separator}eight${file.separator}tools${file.separator}obfuscator-nolog.xml</obfuscator.conf>
+		<obfuscator.in>${project.basedir}${file.separator}target${file.separator}${project.artifactId}-${project.version}.jar</obfuscator.in>
+		<obfuscator.out>${obfuscator.in}</obfuscator.out>
+		<obfuscator.log>${project.basedir}${file.separator}target${file.separator}log.xml</obfuscator.log>
+		<html.skip>true</html.skip>
+		<html.run>${project.basedir}${file.separator}..${file.separator}eight${file.separator}tools${file.separator}htmlcompressor.bat</html.run>
+		<html.out>${project.basedir}${file.separator}target${file.separator}compress</html.out>
+		<html.in>${project.basedir}${file.separator}src${file.separator}main${file.separator}resources</html.in>
+		<yui.skip>true</yui.skip>
+		<yui.run>${project.basedir}${file.separator}..${file.separator}eight${file.separator}tools${file.separator}yuicompressor.bat</yui.run>
+		<yui.out>${project.basedir}${file.separator}target${file.separator}compress${file.separator}</yui.out>
+		<yui.in>${project.basedir}${file.separator}src${file.separator}main${file.separator}resources${file.separator}</yui.in>
+		<yui.log>false</yui.log>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}${file.separator}src${file.separator}main${file.separator}resources${file.separator}</directory>
+			</resource>
+			<resource>
+				<directory>${project.basedir}${file.separator}target${file.separator}compress${file.separator}</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<debug>true</debug>
+					<debuglevel>none</debuglevel>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.5.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+					<instructions>
+						<_donotcopy>(CVS|.svn|.+.bak|~.+|metadata.xml)</_donotcopy>
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.21.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5.2</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<id>html</id>
+						<configuration>
+							<target name="html" unless="${html.skip}">
+								<echo message="html/xml compressing now." />
+								<echo message="input dir: ${html.in}" />
+								<echo message="output dir: ${html.out}" />
+								<exec executable="${html.run}" failonerror="false">
+									<arg value="${html.in}" />
+									<arg value="${html.out}" />
+								</exec>
+								<echo message="compress finish." />
+							</target>						
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>				
+					<execution>
+						<phase>prepare-package</phase>
+						<id>yui</id>
+						<configuration>
+							<skip>${yui.skip}</skip>
+							<target name="silence" unless="${yui.log}">
+								<echo message="input dir: ${yui.in}" />
+								<echo message="output dir: ${yui.out}" />
+								<echo message="js/css compressing now." />
+								<exec executable="${yui.run}" failonerror="false">
+									<arg value="${yui.in}" />
+									<arg value="${yui.out}" />
+								</exec>
+								<echo message="compress finish." />
+							</target>						
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<phase>prepare-package</phase>
+						<id>yui-verbose</id>
+						<configuration>
+							<skip>${yui.skip}</skip>
+							<target name="verbose" if="${yui.log}">
+								<echo message="input dir: ${yui.in}" />
+								<echo message="output dir: ${yui.out}" />
+								<echo message="js/css compressing now." />
+								<exec executable="${yui.run}" failonerror="false">
+									<arg value="${yui.in}" />
+									<arg value="${yui.out}" />
+									<arg value="null" />
+									<arg value="null" />
+									<arg value="null" />
+									<arg value="null" />
+									<arg value="-v" />
+								</exec>
+								<echo message="compress finish." />
+							</target>							
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<phase>install</phase>
+						<id>obfuscator</id>
+						<configuration>
+							<target name="obfuscator" unless="${obfuscator.skip}">
+								<property name="compile_classpath" refid="maven.compile.classpath" />
+								<echo message="running obfuscator" />
+								<property name="obfuscator.in" value="${obfuscator.in}" />
+								<property name="obfuscator.out" value="${obfuscator.out}" />
+								<taskdef name="obfuscator" classname="com.allatori.ant.ObfuscatorTask"
+									classpath="${obfuscator.jar}:${compile_classpath}" />
+								<obfuscator config="${obfuscator.conf}" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<name>Local maven server</name>
+			<url>https://projects:8080/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>Local maven server for snapshots</name>
+			<url>https://projects:8080/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>
