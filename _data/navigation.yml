@@ -1,0 +1,99 @@
+header:
+  - titles:
+      # @start locale config
+      en      : &EN       Archive
+      en-GB   : *EN
+      en-US   : *EN
+      en-CA   : *EN
+      en-AU   : *EN
+      zh-Hans : &ZH_HANS  归档
+      zh      : *ZH_HANS
+      zh-CN   : *ZH_HANS
+      zh-SG   : *ZH_HANS
+      zh-Hant : &ZH_HANT  歸檔
+      zh-TW   : *ZH_HANT
+      zh-HK   : *ZH_HANT
+      ko      : &KO       아카이브
+      ko-KR   : *KO
+      fr      : &FR       Archives
+      fr-BE   : *FR
+      fr-CA   : *FR
+      fr-CH   : *FR
+      fr-FR   : *FR
+      fr-LU   : *FR
+      tr      : &TR       Arşivdekiler
+      # @end locale config
+    url: /archive.html
+
+  - titles:
+      # @start locale config
+      en      : &EN       About
+      en-GB   : *EN
+      en-US   : *EN
+      en-CA   : *EN
+      en-AU   : *EN
+      zh-Hans : &ZH_HANS  关于
+      zh      : *ZH_HANS
+      zh-CN   : *ZH_HANS
+      zh-SG   : *ZH_HANS
+      zh-Hant : &ZH_HANT  關於
+      zh-TW   : *ZH_HANT
+      zh-HK   : *ZH_HANT
+      ko      : &KO       소개
+      ko-KR   : *KO
+      fr      : &FR       À propos
+      fr-BE   : *FR
+      fr-CA   : *FR
+      fr-CH   : *FR
+      fr-FR   : *FR
+      fr-LU   : *FR
+      tr      : &TR       Hakkında
+      # @end locale config
+    url: /about.html
+
+docs-zh:
+  - title:      简介
+    children:
+      - title:  What's Eight
+        url:    /docs/zh/whats-eight
+      - title:  有何不同
+        url:    /docs/zh/whats-the-difference
+        
+  - title:      原理
+    children:
+      - title:  关于eight - 一个特别的Idea
+        url:    /docs/zh/a-special-idea
+      - title:  eight的起点 - 共识接口
+        url:    /docs/zh/common-sense 
+      - title:  思维实验 - 元件和组件
+        url:    /docs/zh/element-and-component       
+      - title:  无所不在无时不在 - 联系、运行与永恒的变化
+        url:    /docs/zh/ever-and-everwhere       
+        
+  - title:      上手
+    children:
+      - title:  从这里开始
+        url:    /docs/zh/lets-start
+      - title:  初体验
+        url:    /docs/zh/first-touch       
+      - title:  试着切换一个系统
+        url:    /docs/zh/switch-a-system
+      - title:  如何操纵
+        url:    /docs/zh/how-to-control
+
+  - title:      Eight的应用场景
+    children:
+      - title:  企业应用新架构
+        url:    /docs/zh/new-architecture-for-enterprise
+      - title:  云上之云
+        url:    /docs/zh/cloud-upon-cloud
+      - title:  部署私有化与运维SaaS
+        url:    /docs/zh/new-ideas-for-saas       
+      - title:  杂谈——关于gpt的一些想法和可能的应用
+        url:    /docs/zh/about-gpt
+
+  - title:      管理平台的UI
+    children:
+      - title:  Eight的设计原则
+        url:    /docs/zh/eights-principal
+      
