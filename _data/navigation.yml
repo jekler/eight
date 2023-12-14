@@ -91,7 +91,14 @@ docs-zh:
         url:    /docs/zh/new-ideas-for-saas       
       - title:  杂谈——关于gpt的一些想法和可能的应用
         url:    /docs/zh/about-gpt
-
+        
+  - title:      应用于边缘设备
+    children:
+      - title:  将Eight应用于ROS
+        url:    /docs/zh/eight-on-ros
+      - title:  实机操作一个ros2机器人
+        url:    /docs/zh/ros-robot-with-eight-inside
+        
   - title:      管理平台的UI
     children:
       - title:  Eight的设计原则
