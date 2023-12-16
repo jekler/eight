@@ -119,7 +119,11 @@ ros2 run demo_nodes_cpp listener
 
 ![ros-消息开发](/eight/assets/images/ros-dev-message.jpg)
 
-以上是ROS2消息开发的模型。可见ROS2开发时，是围绕消息进行的。根据支持的数据type，定义好消息格式，再在各个语言环境中使用generator生成对应的消息的格式库，然后就可以在对应的语言中进行开发。ROS2总体上是面向消息开发的系统，这也是智能设备开发应用的一大特色。
+以上是ROS2消息开发的模型。可见ROS2开发时，是围绕消息进行的。根据支持的数据type，定义好消息格式，再在各个语言环境中使用generator生成对应的消息的格式库，然后就可以在对应的语言中进行开发。`ROS2总体上是面向消息开发的系统`{:.error}，这也是智能设备开发应用的一大特色。
+
+当eight部署于ROS2上时是非常简单的，跟eight的其它部署模式没什么区别，仅仅就是基于java环境运行一个jar包。具体层次架构如图：
+
+![ros-eight层次结构](/eight/assets/images/eight-on-ros-layer.png)
 
 接下来我们看看在eight（rcljava）环境中开发一个模块会是怎样的一个过程。示例代码尽量做到简洁明了，突出重点。
 ~~~ java
