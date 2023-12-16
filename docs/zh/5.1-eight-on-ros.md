@@ -97,14 +97,17 @@ ros2 run demo_nodes_py talker
 ros2 run demo_nodes_cpp listener
 ~~~
 这则是基于cpp开发的一个listener。此时应该能够看到双方控制台均输出了顺序的消息信息。
+
 ![talker](/eight/assets/images/talker.gif)
 ![listener](/eight/assets/images/listener.gif)
+
 上图是talker，下图是listener，可见，消息在不同的主机系统的不同开发语言环境中顺畅交互，这就是ROS2提供的能力。
 
 ### 在ROS2环境中运行eight
 
 我们先理解一下ROS2的开发架构，如图
 ![ros-开发架构](/eight/assets/images/ros-dev.jpg)
+
 可见ROS2的结构相当简洁：
 - 下层是rmw (ros middleware interface)，为相对底层的接口层，直接和DDS交互，C语⾔实现。提供了基于FastRTPS，RTI Conntext等诸多环境下的接口，能够在不同的操作系统环境中进行消息交互。
 
@@ -115,6 +118,7 @@ ros2 run demo_nodes_cpp listener
 - 此外还有一个ros_to_dds组件，该组件主要为应用层直接访问DDS层提供接口。
 
 ![ros-消息开发](/eight/assets/images/ros-dev-message.jpg)
+
 以上是ROS2消息开发的模型。可见ROS2开发时，是围绕消息进行的。根据支持的数据type，定义好消息格式，再在各个语言环境中使用generator生成对应的消息的格式库，然后就可以在对应的语言中进行开发。ROS2总体上是面向消息开发的系统，这也是智能设备开发应用的一大特色。
 
 接下来我们看看在eight（rcljava）环境中开发一个模块会是怎样的一个过程。示例代码尽量做到简洁明了，突出重点。
