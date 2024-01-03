@@ -254,7 +254,7 @@ graph LR;
     H --> I      
 ```
 
-在管理平台上将这个模块绑定到小车的节点上。然后我们监听一个topic看看效果。打开http://小车ip:7241/sub/ros.html。 在topic中输入chatter，然后运行ros2 run demo_nodes_py talker。跟之前一样，我们可以看见输出：
+在管理平台上将这个模块绑定到小车的节点上。然后我们监听一个topic看看效果。打开`http://小车ip:7241/sub/ros.html`{:.info}。 在topic中输入chatter，然后运行ros2 run demo_nodes_py talker。跟之前一样，我们可以看见输出：
 
 ![ros无人车chatter](/eight/assets/images/robot-chatter.gif)
 
@@ -458,7 +458,7 @@ public class RosPub implements IBiProcessor<String, IBiProcessor<Object, Object,
 
 ![ros无人车control](/eight/assets/images/robot-control.gif){:.rounded width="360px" style="display:block; margin-left:auto; margin-right:auto"}
 
-Eight是动态系统，每一个组件功能都可以随时更替，我们可以在小车运行时替换其各种模块，比如给小车增加角度转向功能，更新视觉跟随算法等。这里我们再将camera组件跟control组件结合，这样我们就可以一边跟随小车的视角观察环境，一边指挥小车前进了。发布到小车上，几秒过后刷新界面，变成这样。
+Eight是动态系统，每一个组件功能都可以随时更替，我们可以在小车运行时替换其各种模块，比如给小车增加角度转向功能，更新视觉跟随算法等。这里我们再将camera组件跟control组件结合，这样我们就可以一边跟随小车的视角观察环境，一边指挥小车前进了。发布到小车上，几秒过后刷新网页，变成这样。
 
 ![ros无人车控制台更新](/eight/assets/images/robot-control-ui.jpg)
 
