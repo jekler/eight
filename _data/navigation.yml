@@ -96,7 +96,7 @@ docs-zh:
     children:
       - title:  将Eight应用于ROS
         url:    /docs/zh/eight-on-ros
-      - title:  实机操纵一个ros2机器人
+      - title:  实机操纵一个ROS2机器人
         url:    /docs/zh/ros-robot-with-eight-inside
         
   - title:      管理平台的UI
