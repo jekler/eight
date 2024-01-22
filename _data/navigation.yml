@@ -98,7 +98,9 @@ docs-zh:
         url:    /docs/zh/eight-on-ros
       - title:  实机操纵一个ROS2机器人
         url:    /docs/zh/ros-robot-with-eight-inside
-        
+      - title:  用wifi棒子操纵ROS2机器人
+        url:    /docs/zh/eight-on-openstick
+                
   - title:      管理平台的UI
     children:
       - title:  Eight的设计原则
