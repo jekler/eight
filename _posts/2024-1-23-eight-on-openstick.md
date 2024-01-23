@@ -159,7 +159,7 @@ OK，eight在棒子上跑起来了。此时我们就可以去[https://www.yeeyaa
 ![龙芯笔记本](/eight/assets/images/lemote1.jpg){:.rounded width="720px" style="display:block; margin-left:auto; margin-right:auto"}
 ![龙芯笔记本](/eight/assets/images/lemote2.jpg){:.rounded width="720px" style="display:block; margin-left:auto; margin-right:auto"}
 
-当初为了改善龙芯的生态，龙芯的工程师们亲手操刀把jdk 1.6的运行时迁移到了mipsel指令集上，但却再没有余力实现jit，所以运行效率较为低下（jit对eight影响颇大，eight的元件和组件因为高度复用几乎都会被jit优化）。这也是龙芯2f上唯一一个jdk版本。eight宁可做出大量反向移植，也要将最低支持版本锁定在1.6，其中一个原因，是希望她运行在国产的芯片上，向黑暗中无畏前行的创业者们致敬。龙芯已经今非昔比，也不再沿用mips指令集，但筚路蓝缕的精神长存。
+当初为了改善龙芯的生态，龙芯的工程师们亲手操刀把jdk 1.6的运行时迁移到了mipsel指令集上，但却再没有余力实现jit，所以运行效率较为低下（jit对eight影响颇大，eight的元件和组件因为高度复用几乎都会被jit优化）。这在当时也是龙芯2f上唯一一个jdk版本。eight做出大量反向移植，要将最低支持版本锁定在1.6，其中一个原因，是希望她运行在国产的芯片上，向黑暗中无畏前行的创业者们致敬。龙芯已经今非昔比，也不再沿用mips指令集，但筚路蓝缕的精神长存。
 
 ![龙芯笔记本](/eight/assets/images/eloong5.jpg){:.rounded width="720px" style="display:block; margin-left:auto; margin-right:auto"}
 
