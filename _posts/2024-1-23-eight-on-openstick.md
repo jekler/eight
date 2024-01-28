@@ -94,12 +94,12 @@ proxychains4 -f /etc/proxychains.conf rosdep install --from-paths src --ignore-s
 如果没有安装好ros-dev-tools请安装，否则就开始编译吧，噩梦开始了。
 ~~~ shell
 source install/setup.bash
-colcon build --symlink-install
+colcon build --merge-install
 ~~~
 
 偶尔遇见下载错误编译失败，就需要切换到
 ~~~ shell
-proxychains4 -f /etc/proxychains.conf colcon build --symlink-install
+proxychains4 -f /etc/proxychains.conf colcon build --merge-install
 ~~~
 
 祝你好运。
