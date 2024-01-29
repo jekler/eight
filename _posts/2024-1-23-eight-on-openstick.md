@@ -55,7 +55,7 @@ tr:nth-child(even) {
 
 - 第二点是因为众所周知的原因，github是不能正常访问的。所以需要设置某种代理，然后设置git config --global https.proxy。但是在安装过程中的很多下载并不通过git，而是直接采用curl或wget，这需要安装proxychains-ng才行。安装后前置命令，如proxychains4 -f /etc/proxychains.conf rosdep update。
 
-- 第三点是在使用colcon build时，有些部件是巨大的，比如rclcpp，它大量使用c++的template以致于编译时占用内存过高，此时并行编译会内存不够导致系统宕机。一般单个进程就需要2g内存（这也是前面要求至少配置2g内存的原因），如果编译不过去，给加上--executor sequential编译参数，这样会单进程顺序编译。
+- 第三点是在使用colcon build时，有些部件是巨大的，比如rclcpp，它大量使用c++的template以致于编译时占用内存过高，此时并行编译会内存不够导致系统宕机。一般单个进程就需要2g内存（这也是前面要求至少配置2g内存的原因），如果编译不过去，给加上 MAKEFLAGS="-j1 -l1"和--executor sequential编译参数，如 MAKEFLAGS="-j1 -l1" colcon build --merge-install --executor sequential这样会单进程顺序编译。
 
 - 第四点，mcap_vendor这个包需要下载v0.8.0的包，但是由于不明原因，src里的散列校验码与实际下载包不符，需要修改src里的校验码，从da39a3ee5e6b4b0d3255bfef95601890afd80709到b44637791da2c9c1cec61a3ba6994f1ef63a228c。
 
