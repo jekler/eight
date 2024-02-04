@@ -51,7 +51,7 @@ tr:nth-child(even) {
 
 具体说来，要编译ROS2的全家桶，再加rcljava，对内存和磁盘空间需求很高。棒子本身的资源根本不够。内存的需求是至少2g，磁盘需要20g左右。该如何解决呢？先解决内存，使用棒子rom剩余空间，设一个2g左右的swap，然后挂载虚拟内存。于是基本上没有磁盘了，要编译只能挂载网络文件系统，openstick是不支持的，但内核有fuse，所以apt install sshfs就可以了，然后拿一台linux服务器当磁盘服务器，虽然会比较慢，但也算是解决了磁盘空间问题。接着就是漫长难熬，且反复失败的编译过程，整整花了5天。这是一场行为艺术，棒子也是九死一生。接下来记录一下编译的若干要点，还是强烈建议大家不要去尝试。
 
-- 第一点是关于python3的。棒子安装的python3是删除了主文件和库文件的。需要apt install --reinstall libpython3.9-stdlib python3.9-minimal python3.9-minimal。同时注意安装的python在/usr/bin下预制的软连接是错误指向，删除后重新ln到python3.9上。
+- 第一点是关于python3的。棒子安装的python3是删除了主文件和库文件的。需要apt install --reinstall libpython3.9-stdlib libpython3.9-minimal python3.9-minimal。同时注意安装的python在/usr/bin下预制的软连接是错误指向，删除后重新ln到python3.9上。
 
 - 第二点是因为众所周知的原因，github是不能正常访问的。所以需要设置某种代理，然后设置git config --global https.proxy。但是在安装过程中的很多下载并不通过git，而是直接采用curl或wget，这需要安装proxychains-ng才行。安装后前置命令，如proxychains4 -f /etc/proxychains.conf rosdep update。
 
