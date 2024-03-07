@@ -47,7 +47,7 @@ tr:nth-child(even) {
 
 说干就干，开刷ROS2。可仔细一看傻眼了，ROS2确实支持debian bullseye，但却是tier 3，不提供二进制包，只能自己编译。剩下的选项就是棒子本地编译还是交叉编译了。本地编译资源实在太少，但交叉编译搭环境又太麻烦，稍不小心还容易出错，设备的依赖库也是个问题。于是心一横，还是委屈一下棒子吧:sweat_smile:。
 
-接下来，就是一场噩梦。希望大家不要去尝试，后面我会把编译好的镜像放出来给各位刷机(镜像就在之前虚拟机存放的云空间里：[百度云盘](https://pan.baidu.com/s/1n36sOWviHADT4HxKs9jFfw)，提取码为 bo5c)。
+接下来，就是一场噩梦。希望大家不要去尝试，后面我会把编译好的镜像放出来给各位刷机(编译的是目前主流的Humble LTS版本。镜像就在之前虚拟机存放的云空间里：[百度云盘](https://pan.baidu.com/s/1n36sOWviHADT4HxKs9jFfw)，提取码为 bo5c  [阿里云盘](https://www.alipan.com/s/CNNV8nrJzsa)，提取码为 unr9)。
 
 具体说来，要编译ROS2的全家桶，再加rcljava，对内存和磁盘空间需求很高。棒子本身的资源根本不够。内存的需求是至少2g，磁盘需要20g左右。该如何解决呢？先解决内存，使用棒子rom剩余空间，设一个2g左右的swap，然后挂载虚拟内存。于是基本上没有磁盘了，要编译只能挂载网络文件系统，openstick是不支持的，但内核有fuse，所以apt install sshfs就可以了，然后拿一台linux服务器当磁盘服务器，虽然会比较慢，但也算是解决了磁盘空间问题。接着就是漫长难熬，且反复失败的编译过程，整整花了5天。这是一场行为艺术，棒子也是九死一生。接下来记录一下编译的若干要点，还是强烈建议大家不要去尝试。
 
@@ -61,11 +61,16 @@ tr:nth-child(even) {
 
 - 第五点，原来openstick自带了openjdk 1.8但是没有配置JAVA_HOME，需要在编译rcljava前export该参数
 
-看起来问题似乎不多，但是编译起来还是会遇见各种状况，这是毫无意义的事情，所以还是用我的镜像吧。
+看起来问题似乎不多，但是编译起来还是会遇见各种状况，这是毫无意义的事情，所以还是用我的镜像吧。推荐阿里云盘下载，不限速度。下载rootfs.7z，解压即可得到一个rootfs.img镜像，此为棒子的主系统分区。刷机教程非常多就不一一介绍了。可以将该分区覆盖网上的一键刷机目录下的同名文件（注意，该镜像为4g内存版本，其它版本不通用）。或者使用miko_service_tool等固件恢复软件直接写入镜像到对应分区即可。值得注意的是部分版本的棒子需用boot分区里的基带等固件覆盖/lib/firmware，才能正常使用4g网络。
+
+固件并没有包含eight，直接下载一个，然后环境就全配置好了：
+~~~ shell
+wget https://www.yeeyaa.net/console/static/download/eight-seat-1.0.0.jar
+~~~
 
 ### 系统部署和使用
 
-主要参考[https://wiki.debian.org/DebianScience/Robotics/ROS2](https://wiki.debian.org/DebianScience/Robotics/ROS2)和[https://docs.ros.org/en/rolling/Installation/Ubuntu-Development-Setup.html#build-the-code-in-the-workspace](https://docs.ros.org/en/rolling/Installation/Ubuntu-Development-Setup.html#build-the-code-in-the-workspace)两篇文档。
+下面介绍手工编译，主要参考[https://wiki.debian.org/DebianScience/Robotics/ROS2](https://wiki.debian.org/DebianScience/Robotics/ROS2)和[https://docs.ros.org/en/rolling/Installation/Ubuntu-Development-Setup.html#build-the-code-in-the-workspace](https://docs.ros.org/en/rolling/Installation/Ubuntu-Development-Setup.html#build-the-code-in-the-workspace)两篇文档。
 
 具体说来，首先
 ~~~ shell
@@ -168,6 +173,12 @@ OK，eight在棒子上跑起来了。此时我们就可以去[https://www.yeeyaa
 ![棒子自杀](/eight/assets/images/eight-on-openstick.gif){:.rounded width="720px" style="display:block; margin-left:auto; margin-right:auto"}
 
 这里说一下不知是410的功效问题还是openstick自带的jdk没做性能优化，或者是网络性能不佳（补充说明，确实是角落处网络信号不佳，也有可能与黄铜散热片有关）。在进行图片采集和传输时卡顿比较严重，但此时只有单核负载重，可以考虑在代码上做些优化，使用线程池来处理这些图片消息。另外，410满负荷运行还是挺能发热的，所以不得不花了8元重金为它求得两枚黄铜散热片。
+
+最后，再看看执行效果，首先看看棒子全装配后的资源用量。可见，无论是磁盘还是内存都是很有限的，4g存储的可用分区为3.3g，ros一装几乎全部用掉了。内存也仅有512M，用来当服务器是真不行。有意思的是这个虚拟内存，磁盘上显然没有空间做虚拟内存，那么swap分区究竟从哪来的呢？注意到512m的内存其实只有384m被使用，剩余的哪去了？原来是mount了内存文件系统，而swap就是在这个文件系统上。看上去挺无聊的是吗？但是该文件系统是压缩系统，空间比物理空间大了一倍。所以swap空间虽然还是在内存里，却增长了一倍，代价是效率较低。这也是低资源系统尽可能用cpu算力换取空间的方式。
+![棒子资源](/eight/assets/images/stick-resource.jpg){:.rounded width="720px" style="display:block; margin-left:auto; margin-right:auto"}
+
+然后是eight的用量了，我们将eight跑起来看看。eight在贫瘠的环境上运行良好。完全跑起前面介绍的服务也只用了200多M内存，在这个加上swap也不过600M内存的环境中能够得到流畅的运行。棒子的410 cpu性能还是可以的，eight运行的很顺畅。至于单核占用率太高则是前面代码图方便使用了轮询造成的。总之，在这款简陋的棒子上部署了eight on ros，基本上算是将其潜力发挥到了极限。
+![eight占用资源](/eight/assets/images/eight-on-stick.jpg){:.rounded width="720px" style="display:block; margin-left:auto; margin-right:auto"}
 
 最后给上一张全家福，每位上面都运行着eight。
 
