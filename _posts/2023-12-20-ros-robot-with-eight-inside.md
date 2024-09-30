@@ -109,7 +109,7 @@ ros2 topic list
 /tf_static
 ~~~
 
-等一系列topic，涉及电压、底盘控制、诊断、传感器、位置积算等诸多方面。再打开摄像头，出现了
+等一系列topic，涉及电压、底盘控制、诊断、传感器、位置计算等诸多方面。再打开摄像头，出现了
 
 ~~~ shell
 /camera/color/camera_info

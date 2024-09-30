@@ -132,13 +132,13 @@ public class AdaptProcessor implements IBiProcessor<Object, Object, Object>, IPr
 这就是为什么eight要外化联系的原因。但说这么多，这联系究竟是什么？它长什么样？回答这个问题前，我们还是把整个eight的运行时结构勾勒出来，有个直观感受吧。
 ![eight](/eight/assets/images/eight.gif){:.rounded width="720px" style="display:block; margin-left:auto; margin-right:auto"}
 
-联系就在里面，那个实体为link的组件。
+联系就在里面，那个实体为linker的组件。
 
 ### 运行与变化
 eight与其它框架不同之处在于它多出一种时态——装配时。联系是在装配时发生的。这个时态与运行时没有固定边界，它可能在运行时之前，也可能在运行时之中，所以它既有静态形态，也有动态形态。eight在进入运行态前，往往需要配置各种联系。
-![装配时](/eight/assets/images/equiptime.gif){:.rounded width="720px" style="display:block; margin-left:auto; margin-right:auto"}
+![装配时](/eight/assets/images/assemblytime.gif){:.rounded width="720px" style="display:block; margin-left:auto; margin-right:auto"}
 
-这些我们前面都已经了解了，用spring做配置是不用介绍了。接下来主要介绍运行时的动态联结，那些package、bundle、component、config、instance和link们的关系。
+这些我们前面都已经了解了，用spring做配置是不用介绍了。接下来主要介绍运行时的动态联结，那些package、bundle、component、config、instance和linker们的关系。
 - 首先是基础底座了，基础底座就是felix框架了，内置的三大基础libs分别是1）java runtime libs；2)共识接口；3)eight基础库。当然eight本身还依赖着一些常用的工具libs，但这一般对上层运行的bundle不可见。同时使用者也可能自行开发一些元件库。这些构成了eight的最底层，第三方libs往往会有各种交叉依赖，所以这层变动是很困难的，升级往往意味着重启。
 - 其上是bundle层了。eight中的bundle间已经不存在交叉依赖了，全是垂直依赖关系，保证任何一个bundle在物理上不依赖于与其平级的bundle，这样依赖之网也就被解除了。所以当bundle里的代码或配置修改后，需要重载时，其余的bundle不受影响。当然它们都依赖着底层libs，尤其是共识接口。一旦底层变动...呃，那本来就是要重启系统了，所以保持底层相对稳定很重要。但如果底层没有它们需要的libs呢？前面介绍过，可以在bundle里自带干粮。
 - 然后是component，到这里已经离开物理层进入逻辑层了。component就对应eight里的组件，关于component与instance的关系和故事大家可以参阅前面的iPojo介绍。值得注意的是，bundle里可以定义零到多个component，但一般建议只定义一个，否则多个component必然在生命周期上存在耦合性，这在大多数情况下都是应该避免的。
@@ -147,8 +147,8 @@ eight与其它框架不同之处在于它多出一种时态——装配时。联
 - 以上都是静态结构，再往上就进入运行着的部分了。instance之于component，相当于object之于class。可以以component为模板生成多个instance实例。那么生成过程中那个config文件是做什么用的呢？那相当于构造函数的参数，spring的各项配置和其它一些环境参数，如instance名称，类型，标签，优先级等等均在此配置。不同的config生成的instance各不相同。
 - instance生成后，config就被注入springContext，然后springContext启动，各项bean生成并联结，就运行并可以对外提供服务了。值得注意的是，与通常意义上的模块（库、包、系统的一部分代码等）不同，`eight的模块是活的模块，它本身自成一体的独立存在和运行，不依整体或他者而生灭`{:.info}，这一点可以理解为容器化里的某个服务。
 - config是个文本文件，它被eight所监控，任何对它配置项的修改将导致该instance重启（注意不是bundle也不是component重启，不需要丢弃类加载器重新加载类）。而对bundle的修改会导致其中所有component生成的instance重启。
-- link是联系。它本身是一个bundle对应的component创建的instance，它也由config配置和维护，并随config修改而变化。link内部并不运行springContext，相反它利用OSGi的筛选器筛选其它instance并把自身注入到两端的instance中，从而完成桥梁联结的作用。引用方一端调用，将通过IUniversal接口传递到服务方，从而完成事物间的协作。
-- link可以配置脚本执行简单的适配工作，目前支持groovy。对于复杂的适配，则可能需要在事物中间增加适配component，当然这种component会带来额外的开发，也不稳定，会随关系的消失而灭失。所以祈祷我们的模块开发者共识差异不要太大吧。
+- linker是联系。它本身是一个bundle对应的component创建的instance，它也由config配置和维护，并随config修改而变化。linker内部并不运行springContext，相反它利用OSGi的筛选器筛选其它instance并把自身注入到两端的instance中，从而完成桥梁联结的作用。引用方一端调用，将通过IUniversal接口传递到服务方，从而完成事物间的协作。
+- linker可以配置脚本执行简单的适配工作，目前支持groovy。对于复杂的适配，则可能需要在事物中间增加适配component，当然这种component会带来额外的开发，也不稳定，会随关系的消失而灭失。所以祈祷我们的模块开发者共识差异不要太大吧。
 - 最后的注意事项，出于Java本身的特质，尽管解除了类依赖，Object的依赖仍可能存在。所以应严格控制bundle内的类型通过对外服务扩散到系统其它模块。一般的解决方式有几种：1）推荐的，以几个基础库提供的基本数据结构，如Java自带的String，Map，List，Json等向外提供数据，反正你传内部类给别人别人也看不懂（注意，容器化系统之所以能够服务间类型依赖解耦用的正是这种方式，只不过它通过串行化反串行化的网络传输强制实现）。2）如果服务将一些内部类以共识接口的方式提供给外界，比如某个服务回传一个IProcessor给调用方，调用方则用此IProcessor做下阶段处理，则尽可能使用eight元件库提供的共识代理，这样即便对方持有该代理，代理也遵循空值-查询-弱引用规则，不会持有内部类句柄；3）调用方对得到的非基础类型应遵循随用随取，阅后即焚原则，不应长期持有。
 
 以上这些，就是关于eight的入门介绍，就此暂告一段落。更多相关内容，可以参阅相关的[技术文档](/eight/assets/images/eightV1.0.pdf)和[介绍文档](/eight/assets/images/eight.pdf)。

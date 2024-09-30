@@ -178,7 +178,7 @@ public class Dispatcher implements IProcessor<Object, Object>{
 }
 ~~~
 
-说明一下，beanHolder基本上可以理解为beanFactory，依靠它可以取到当前springContext里的bean。ProxyBean那段是个通用配置了，以后经常会见面，因为它是`域外世界`{:.info}的连接点，它会对接一个link，我们的模块通过它与未知的外界模块发生联结。所以它伪装为IUniversal（UniversalProxy），也即可以是eight世界里的任何一种接口。但这不重要，它在这个问题里是无关痛痒的小角色，唯一需要注意的是它靠name这个属性来确定调用哪个外部link。
+说明一下，beanHolder基本上可以理解为beanFactory，依靠它可以取到当前springContext里的bean。ProxyBean那段是个通用配置了，以后经常会见面，因为它是`域外世界`{:.info}的连接点，它会对接一个linker，我们的模块通过它与未知的外界模块发生联结。所以它伪装为IUniversal（UniversalProxy），也即可以是eight世界里的任何一种接口。但这不重要，它在这个问题里是无关痛痒的小角色，唯一需要注意的是它靠name这个属性来确定调用哪个外部linker。
 
 所有的信息都完整提供了。现在的问题是大家知道这个模块是做什么的吗？为何如此配置？运行时入口在哪里？经过了何种处理得到何种结果？怎么做到的？大家有兴趣的可以给我留言喔~~
 

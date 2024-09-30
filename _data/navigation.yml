@@ -64,7 +64,7 @@ docs-zh:
       - title:  关于eight - 一个特别的Idea
         url:    /docs/zh/a-special-idea
       - title:  eight的起点 - 共识接口
-        url:    /docs/zh/common-sense 
+        url:    /docs/zh/similar-concepts 
       - title:  思维实验 - 元件和组件
         url:    /docs/zh/element-and-component       
       - title:  无所不在无时不在 - 联系、运行与永恒的变化
@@ -89,8 +89,6 @@ docs-zh:
         url:    /docs/zh/cloud-upon-cloud
       - title:  部署私有化与运维SaaS
         url:    /docs/zh/new-ideas-for-saas       
-      - title:  杂谈——关于gpt的一些想法和可能的应用
-        url:    /docs/zh/about-gpt
         
   - title:      应用于边缘设备
     children:
@@ -105,4 +103,66 @@ docs-zh:
     children:
       - title:  Eight的设计原则
         url:    /docs/zh/eights-principal
-      
+        
+  - title:      Languages        
+    children:
+      - title:  English
+        url:    /docs/en/whats-eight
+               
+docs-en:
+  - title:      Introduction
+    children:
+      - title:  What's Eight
+        url:    /docs/en/whats-eight
+      - title:  What are the Differences
+        url:    /docs/en/whats-the-difference
+        
+  - title:      Theory
+    children:
+      - title:  About Eight - A Special Idea
+        url:    /docs/en/a-special-idea
+      - title:  Eight's Starting Point - Similar-Concepts Interfaces
+        url:    /docs/en/similar-concepts 
+      - title:  Thought Experiment - Elements and Components
+        url:    /docs/en/element-and-component       
+      - title:  Ever and Everwhere - Connections, Operations, and Constant Change
+        url:    /docs/en/ever-and-everwhere       
+        
+  - title:      Quick Start
+    children:
+      - title:  Starting Here
+        url:    /docs/en/lets-start
+      - title:  Initial Experience
+        url:    /docs/en/first-touch       
+      - title:  Trying to Switch a System
+        url:    /docs/en/switch-a-system
+      - title:  How to Control
+        url:    /docs/en/how-to-control
+
+  - title:      Application Scenarios of Eight
+    children:
+      - title:  New Architecture for Enterprise
+        url:    /docs/en/new-architecture-for-enterprise
+      - title:  Cloud upon Cloud
+        url:    /docs/en/cloud-upon-cloud
+      - title:  Deploying Private and Managing by SaaS
+        url:    /docs/en/new-ideas-for-saas       
+        
+  - title:      Applying Eight to Edge Devices
+    children:
+      - title:  Using Eight with ROS
+        url:    /docs/en/eight-on-ros
+      - title:  Controlling a ROS2 Robot
+        url:    /docs/en/ros-robot-with-eight-inside
+      - title:  Controlling a ROS2 Robot with a WiFi Stick
+        url:    /docs/en/eight-on-openstick
+                
+  - title:      UI for Admin Platform
+    children:
+      - title:  Design Principals of Eight
+        url:    /docs/en/eights-principal
+        
+  - title:      Languages        
+    children:
+      - title:  中文
+        url:    /docs/zh/whats-eight     
